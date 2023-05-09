@@ -1,0 +1,20 @@
+﻿@model int
+
+<div class="d-flex justify-content-center align-items-center" role="group">
+    <a asp-action="Details" class="btn btn-success text-white" asp-route-id="@Model">
+        @*عشان أمرر براميتر*@
+        Details
+    </a>
+
+    &nbsp;  @*بتعمل مسافة بين البوتونز*@
+
+    <a asp-action="Edit" class="btn btn-primary text-white" asp-route-id="@Model">
+        Edit
+    </a>
+
+    &nbsp; @*بتعمل مسافة بين البوتونز*@
+
+    <a asp-action="Delete" class="btn btn-danger text-white" asp-route-id="@Model">
+        Delete
+    </a>
+</div>

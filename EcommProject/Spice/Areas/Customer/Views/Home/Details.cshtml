@@ -1,0 +1,116 @@
+﻿@model ShoppingCart
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2 class="text-info">Menu Item Details</h2>
+<br />
+<form asp-action="Details" method="post">
+    @*nctype="multipart/form-data" باسخدمها لما بدي أرفع صور بأي فورم*@
+
+    <input type="hidden" asp-for="MenuItemId" />
+    <div class="whiteBackground border row">
+        <div class="col-md-8">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-12 pb-4 d-md-none"> @*بظهر الصورة فقط لما يكون حجمها أصغر من الميدوم بدل الصورة اللي حاطتها تحت*@
+                <img src="@Model.MenuItem.Image" width="100%" style="border:1 solid #bbb9b9; border-radius:5px;" />
+            </div>
+
+            <div class="from-control row mt-3">
+                <div class="col-md-4">
+                    <label asp-for="MenuItem.Name" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-md-8">
+                    <input asp-for="MenuItem.Name" readonly class="form-control" />
+                </div>
+            </div>
+
+
+            <div class="from-group row mt-3">
+                <div class="col-md-4">
+                    <label asp-for="MenuItem.Description" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-md-8">
+                    <div class="border p-2" style="border-radius:5px;background-color:rgb(233 236 239)">
+                        @Html.Raw(Model.MenuItem.Description)
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="from-group row mt-3">
+                <div class="col-md-4">
+                    <label asp-for="MenuItem.Price" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-md-8">
+                    <input asp-for="MenuItem.Price" readonly class="form-control" />
+                </div>
+            </div>
+
+            <div class="from-group row mt-3">
+                <div class="col-md-4">
+                    <label asp-for="MenuItem.CategoryId" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-md-8">
+                    <input asp-for="MenuItem.Category.Name" readonly class="form-control" />
+                </div>
+            </div>
+
+
+
+            <div class="from-group row mt-3">
+                <div class="col-md-4">
+                    <label asp-for="MenuItem.SubCategoryId" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-md-8">
+                    <input asp-for="MenuItem.SubCategory.Name" readonly class="form-control" />
+
+                </div>
+            </div>
+
+           @* <div class="from-group row mt-3">
+                <div class="col-md-4">
+                    <label asp-for="MenuItem.Spicyness" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-md-8">
+                    <select asp-for="MenuItem.Spicyness" disabled asp-items="@Html.GetEnumSelectList<MenuItem.ESpicy>()" class="form-control"></select>
+                </div>
+            </div>*@
+
+            <div class="from-group row mt-3">
+                <div class="col-md-4">
+                    <label asp-for="Count" class="text-info font-weight-bold"></label>
+                </div>
+                <div class="col-md-8">
+                    <input asp-for="Count" class="form-control" />
+                    <span asp-validation-for="Count" class="text-danger"></span>
+                </div>
+            </div>
+
+
+
+            <div class="from-group row " style="padding-top:20px;">
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-md-4 mb-4">
+                    <a asp-action="Index" class="btn btn-success form-control"> Back To List</a>
+                </div>
+                <div class="col-md-4">
+                    <input type="submit" value="Add To Shopping Cart" class="btn btn-primary form-control" />
+                </div>
+
+            </div>
+        </div>
+        <div class="col-3 d-none d-md-block offset-1"> @*باستخدمهن عشان أخفي الصورة  لما تصير حجمها أقل من الميديوم d-none d-md-block*@
+            <img src="@Model.MenuItem.Image" width="100%" style="border:1 solid #bbb9b9; border-radius:5px;" />
+        </div>
+    </div>
+</form>
+
+@section scripts{   @*عشان يصير الريكواير على مستوى الصفحة مش ع مستوى السيرفير يعني بمنع الريفريش*@
+<partial name="_ValidationScriptsPartial" />
+}
+

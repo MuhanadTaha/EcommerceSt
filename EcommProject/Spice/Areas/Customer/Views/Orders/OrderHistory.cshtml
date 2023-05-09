@@ -1,0 +1,141 @@
+﻿@model IEnumerable<OrderDetailsViewModel>
+
+@{
+    ViewData["Title"] = "OrderHistory";
+}
+
+<div class="whiteBackground border">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-info">Order History List</h2>
+        </div>
+       
+    </div>
+
+
+    <div>
+        @if (Model.Count() == 0)
+        {
+            <p class="text-danger">No Order History ...</p>
+        }
+        else
+        {
+
+            <table class="table table-striped border">
+                <tr class="table-secondary">
+                    <th>
+                        @Html.DisplayNameFor(m => m.OrderHeader.id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.OrderHeader.PickUpName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.OrderHeader.ApplicationUser.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.OrderHeader.PickUpTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.OrderHeader.OrderTotal)
+                    </th>
+                    <th>
+                        Total items
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+
+                @foreach (var item in Model)
+
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.OrderHeader.id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.OrderHeader.PickUpName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.OrderHeader.ApplicationUser.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.OrderHeader.PickUpTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.OrderHeader.OrderTotal)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.OrderDetails.Count) @*عدد الالأشياء المطلوبة لكل أوردار*@
+                        </td>
+
+                       
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog-centered modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-light justify-content-center">
+                <h5 class="modal-title"> Order Details</h5>
+
+            </div>
+
+            <div class="modal-body justify-content-center" id="myModalContent">
+            </div>
+
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" style="width:20%" data-dismiss="modal">
+                    @*data-dismiss عشان الموادل يختفي*@
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        var URL = '/customer/Orders/GetOrderDetails';
+        $(function () {
+            $(".showDetails").click(function () {
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');// رح يجيب قيمة الأي دي للأوردار اللي بالبوتون
+
+                console.log(id);
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: URL,
+                        contentType: "application/json;charset=utf-8",
+                        data: { "id": id }, // القيمة اللي بدي أمررها للميثود بالباك ايند
+                        cache: false,
+                        dataType: "html",
+                        // الداتا اللي رح تنعرض رح تكون الداتا تايب تبعتها html
+                        success: function (data) {
+                            $('#myModalContent').html(data); // الداتا اللي مقصود فيها هان هي القيمة اللي رح ترجع من الميثود اللي بالباك ايند ورح يحزنها هان داخل المودال كونتانت
+                            $('#myModal').modal('show');         // عشان المودال ينعرض
+                        },
+
+                        error: function () {
+                            alert("Dynamic Content Load Faild");
+
+                        }
+                    }
+                );
+
+            });
+
+        });
+
+
+    </script>
+
+
+}

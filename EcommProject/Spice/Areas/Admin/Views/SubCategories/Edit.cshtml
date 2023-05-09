@@ -1,0 +1,54 @@
+﻿@model SubCategoryAndCategoryViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2 class="text-info">Edit Sub Category</h2>
+
+<br />
+
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div class="whiteBackground border row">
+    <div class="col-8 border-right">
+        <form asp-action="Edit" method="post">
+            <input type="hidden"  asp-for="SubCategory.Id"/>
+            <input type="hidden" asp-for="SubCategory.CategoryId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+            <div class="from-control row">
+                <div class="col-3">
+                    <label asp-for="SubCategory.CategoryId" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <select class="form-control" id="ddlCategories" disabled asp-for="SubCategory.CategoryId" asp-items="@(new SelectList(Model.CategoriesList,"Id","Name"))"></select>
+                    <span class=" text-danger" asp-validation-for="SubCategory.Name"></span> 
+                </div>
+            </div>
+
+            <div class="from-control row " style="padding-top:20px;">
+                <div class="col-3">
+                    <label asp-for="SubCategory.Name" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="SubCategory.Name" class="form-control" />
+                    <span class=" text-danger" asp-validation-for="SubCategory.Name"></span> @*To Required Field*@
+                </div>
+            </div>
+
+            <div class="from-group row" style="padding-top:20px;">
+                <div class="col-5 offset-3">
+                    <partial name="UpdateAndBackListButtonPartialView" />
+                </div>
+            </div>
+        </form>
+    </div>
+   
+</div>
+
+@section scripts{   @*عشان يصير الريكواير على مستوى الصفحة مش ع مستوى السيرفير يعني بمنع الريفريش*@
+<partial name="_ValidationScriptsPartial" />
+
+}
+

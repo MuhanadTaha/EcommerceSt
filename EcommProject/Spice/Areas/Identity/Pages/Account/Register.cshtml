@@ -1,0 +1,128 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+<br />
+<h2 class="text-info">Create a New Account</h2>
+<br />
+<form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <div class="whiteBackground border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="from-control row mt-3">
+            <div class="col-2">
+                <label asp-for="Input.Name" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Input.Name" class="form-control" />
+                <span class="text-danger" asp-validation-for="Input.Name"></span> @*To Required Field*@
+            </div>
+        </div>
+
+        <div class="from-control row mt-3">
+            <div class="col-2">
+                <label asp-for="Input.Email" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Input.Email" class="form-control" />
+                <span class="text-danger" asp-validation-for="Input.Email"></span> @*To Required Field*@
+            </div>
+        </div>
+
+        <div class="from-control row mt-3">
+            <div class="col-2">
+                <label asp-for="Input.PhoneNumber" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Input.PhoneNumber" class="form-control" />
+                <span class="text-danger" asp-validation-for="Input.PhoneNumber"></span> @*To Required Field*@
+            </div>
+        </div>
+
+        <div class="from-control row mt-3">
+            <div class="col-2">
+                <label asp-for="Input.StreetAddress" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Input.StreetAddress" class="form-control" />
+                <span class="text-danger" asp-validation-for="Input.StreetAddress"></span> @*To Required Field*@
+            </div>
+        </div>
+
+
+        <div class="from-control row mt-3">
+            <div class="col-2">
+                <label asp-for="Input.City" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Input.City" class="form-control" />
+                <span class="text-danger" asp-validation-for="Input.City"></span> @*To Required Field*@
+            </div>
+        </div>
+
+        <div class="from-control row mt-3">
+            <div class="col-2">
+                <label asp-for="Input.state" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Input.state" class="form-control" />
+                <span class="text-danger" asp-validation-for="Input.state"></span> @*To Required Field*@
+            </div>
+        </div>
+
+        <div class="from-control row mt-3">
+            <div class="col-2">
+                <label asp-for="Input.PostalCode" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Input.PostalCode" class="form-control" />
+                <span class="text-danger" asp-validation-for="Input.PostalCode"></span> @*To Required Field*@
+            </div>
+        </div>
+        <div class="from-control row mt-3">
+            <div class="col-2">
+                <label asp-for="Input.Password" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Input.Password" class="form-control" />
+                <span class="text-danger" asp-validation-for="Input.Password"></span> @*To Required Field*@
+            </div>
+        </div>
+        <div class="from-control row mt-3">
+            <div class="col-2">
+                <label asp-for="Input.ConfirmPassword" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span class="text-danger" asp-validation-for="Input.ConfirmPassword"></span> @*To Required Field*@
+            </div>
+        </div>
+
+
+        @if (User.IsInRole(SD.ManagerUser)) // إذا اليوزر الحالي في الرول كان مانيجا رح تظهر هذي الخيارات
+        {
+            <div class="from-group row mt-3">
+                <div class="col-2">
+
+                </div>
+                <div class="col-5">
+                    <label class="form-check-label">
+                        <input type="radio" value="@SD.ManagerUser" name="rdUserRole" checked /> @SD.ManagerUser
+                    </label>
+                </div>
+            </div>
+        }
+
+
+        <div class="from-group row mt-3" style="padding-top:20px;">
+            <div class="col-5 offset-2">
+                <button type="submit" class="btn btn-primary form-control">Register</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

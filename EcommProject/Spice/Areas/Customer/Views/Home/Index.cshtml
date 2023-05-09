@@ -1,0 +1,106 @@
+﻿@model IndexViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+
+
+
+<br />
+<div class="whiteBackground container">
+    <ul id="menu-filter" class="menu-filter-list list-inline text-center">
+        <li class="active btn btn-secondary ml-1 mr-1" data-filter=".AllCategories"> Show All</li> @* باستخدمها عشان أظهر الديفات اللي بتحمل نفس اسم الكلاس اللي جواها data-filter*@
+        @*الداتا فلتر رح تجيب كل الكلاسيس اللي اسمخا اوول كاتيجوريز*@
+        @foreach (var category in Model.Categories)
+        {
+
+            <li class="ml-1 mr-1" data-filter=".@category.Name.Replace(" " ,string.Empty)"> @category.Name</li>
+
+        }
+    </ul>
+
+
+    @foreach (var category in Model.Categories)
+    {
+        var menuItems = Model.MenuItems.Where(m => m.Category.Name.Equals(category.Name)); // بدي أجيب كل المنيو أيتميز لكل كاتيجوري
+
+        <div class="row">
+            @if (menuItems.Count() > 0) //  في حال كان موجود منيو أيتيمز تابع لهذه الكاتيجوري
+            {
+                <div class="col-12 @category.Name.Replace(" ", string.Empty) AllCategories">
+                    @*استخدمت هذا الاشي عشان لما أكبس على البوتون اللي اسمه شووو اووول الديفات كلها تطلع
+                        ولما أكبس على اظهار كاتيجوري معين يظهرلي الديف اللي بتحمل نفس الإسم*@
+                    <div class="row">
+                        <h3 class="text-success">
+                            @category.Name
+                        </h3>
+                    </div>
+
+                    @foreach (var item in menuItems)
+                    {
+                        <div class="border border-info  col-12" style="margin-top:10px; margin-bottom:10px; padding:10px;">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-12">
+                                    <img src=@item.Image width="99%" style="border:1px solid #bbb9b9" />
+
+                                </div>
+                                <div class="col-md-9 col-sm-12">
+                                    <div class="row pr-3">
+                                        <div class="col-8">
+                                            <label class="text-primary" style="font-size:21px">
+                                                @item.Name
+                                            </label>
+                                        </div>
+                                        <div class="col-4 text-right" style="color:maroon">
+                                            <h4>
+                                                $ @item.Price
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="row col-12 text-justify d-none d-md-block">
+                                        <p>@Html.Raw(@item.Description)</p> @* عشان يطبق التاغ ال اتش تي أم أل المخزنة بالداتا بيس بدل ما  يعرضها كنص Html.Raw باستخدمه*@
+                                    </div>
+                                    <div class="col-md-3 col-sm-12 offset-md-9 text-right">
+                                        <a asp-action="Details" class="btn btn-success form-control" asp-route-itemid="@item.Id">Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    }
+                </div>
+
+            }
+        </div>
+        <div class="p-4">
+
+        </div>
+
+
+
+    }
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(
+            function ($) {
+                $("#menu-filter li").click(
+                    function () {
+                        $("#menu-filter li").removeClass("active btn btn-secondary"); //بحذف الأكتف من الديف اللي بتظهر كل العناصر ويضيفه على الديفات اللي بخنتارهن من خلال البوتون menu-filter  هان لما أكبس على الكلاس اللي اسمه
+                        $(this).addClass("active btn btn-secondary"); // البوتون اللي ضغطت عليه رح أضيفله هاي الكلاسات عشان يتميّز لونه عن الباقي وأعرف أنوه اللي واقف عليه أنا
+                        var selectedFilter = $(this).data("filter"); // بجيب اسم الداتا فلتر اللي ضغطت عليه وبحطه بمتغير
+                        $(".AllCategories").fadeOut(); // بخفي كل اللي  الدفات اللي عندهم نفس هذا الكلاس
+                        setTimeout(function () { // الوقت عشان أظهر الداتا الملفلترة
+                            $(selectedFilter).slideDown(); // بعرض الداتا للفترت اللي اخترته بشكل تنازلي
+                        }, 300)
+                    }
+                )
+            }
+        );
+    </script>
+
+}
