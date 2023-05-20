@@ -50,5 +50,18 @@ namespace Spice.Areas.Customer.Controllers
         }
 
 
+        public async Task<IActionResult> GetOrderDetails(int id)
+        {
+            OrderDetailsViewModel orderDetailsVM = new OrderDetailsViewModel()
+            {
+                OrderHeader = await db.OrderHeaders.Include(m => m.ApplicationUser).FirstOrDefaultAsync(m => m.id == id),
+                OrderDetails = await db.OrderDetails.Where(m => m.OrderId == id).ToListAsync()
+            };
+
+            return PartialView("_IndividualOrderDetails", orderDetailsVM);
+            // عشان أعمل موديل ديالوع بخلي الريتيرن ترجع بارشيال فيو وبمررله داتا أوردار ديتالز فيو موديل
+        }
+
+
     }
 }

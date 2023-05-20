@@ -9,7 +9,9 @@
         <div class="col-6">
             <h2 class="text-info">Order History List</h2>
         </div>
-       
+        <div class="col-6 text-right">
+            <partial name="_CreateButtonPartial" />
+        </div>
     </div>
 
 
@@ -63,16 +65,23 @@
                             @Html.DisplayFor(m => item.OrderHeader.PickUpTime)
                         </td>
                         <td>
-                            @Html.DisplayFor(m => item.OrderHeader.OrderTotal)
+                            @Html.DisplayFor(m => item.OrderHeader.OrderTotal)₪
                         </td>
                         <td>
                             @Html.DisplayFor(m => item.OrderDetails.Count) @*عدد الالأشياء المطلوبة لكل أوردار*@
                         </td>
 
-                       
+                        <td style="width:150px;">
+                            <button type="submit" class="btn btn-success showDetails" data-id="@item.OrderHeader.id" data-toggle="modal">
+                                @*data-id هذا معناه الباراميتار اللي بدي أمرره*@
+                                @*data-toggle="modal" عشان تظهرلي المودال*@
+                                <i class="fas fa-list-alt"></i> Details
+                            </button>
+                        </td>
                     </tr>
                 }
             </table>
+
         }
     </div>
 </div>
@@ -137,5 +146,6 @@
 
     </script>
 
+    }
 
-}
+

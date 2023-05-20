@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FJBMGO3OP+JZSCVaHwVNZzm9ev4SWQZriXb5OzURber9AoG8fVnU+ZVPfKGzc8RfluypEjByp/DJhuMEL5WXVA==",
+  "dgSpecHash": "hS/xsvJUBH3xzouJquNcfrigCM1kcwZMJs+52JA9gHN8HwyHhNCMr8uNa8MyvXfpu8qiGYY8V9DNtDTjFAbz0w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\source\\repos\\Students Projects\\New folder\\EcommProject\\Spice\\EcommProject.csproj",
+  "projectFilePath": "C:\\Users\\user\\source\\repos\\Students Projects\\Moham\\EcommerceSt\\EcommProject\\Spice\\EcommProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.17\\microsoft.aspnetcore.cryptography.internal.5.0.17.nupkg.sha512",

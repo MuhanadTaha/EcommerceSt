@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\source\\repos\\Students Projects\\New folder\\EcommProject\\Spice\\EcommProject.csproj": {}
+    "C:\\Users\\user\\source\\repos\\Students Projects\\Moham\\EcommerceSt\\EcommProject\\Spice\\EcommProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\source\\repos\\Students Projects\\New folder\\EcommProject\\Spice\\EcommProject.csproj": {
+    "C:\\Users\\user\\source\\repos\\Students Projects\\Moham\\EcommerceSt\\EcommProject\\Spice\\EcommProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\source\\repos\\Students Projects\\New folder\\EcommProject\\Spice\\EcommProject.csproj",
+        "projectUniqueName": "C:\\Users\\user\\source\\repos\\Students Projects\\Moham\\EcommerceSt\\EcommProject\\Spice\\EcommProject.csproj",
         "projectName": "EcommProject",
-        "projectPath": "C:\\Users\\user\\source\\repos\\Students Projects\\New folder\\EcommProject\\Spice\\EcommProject.csproj",
+        "projectPath": "C:\\Users\\user\\source\\repos\\Students Projects\\Moham\\EcommerceSt\\EcommProject\\Spice\\EcommProject.csproj",
         "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\source\\repos\\Students Projects\\New folder\\EcommProject\\Spice\\obj\\",
+        "outputPath": "C:\\Users\\user\\source\\repos\\Students Projects\\Moham\\EcommerceSt\\EcommProject\\Spice\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -94,7 +95,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }
