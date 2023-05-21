@@ -88,8 +88,13 @@
                     <span asp-validation-for="Count" class="text-danger"></span>
                 </div>
             </div>
-
-
+          
+            @if (ViewBag.count != null)
+            {
+            <div class="alert alert-warning text-end" role="alert">
+                    @ViewBag.count
+            </div>
+            }
 
             <div class="from-group row " style="padding-top:20px;">
                 <div class="col-md-4">

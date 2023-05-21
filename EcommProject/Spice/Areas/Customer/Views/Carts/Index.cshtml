@@ -17,7 +17,12 @@
                             
                         </div>
                     </div>
-
+                    @if (ViewBag.count != null)
+                    {
+                        <div class="alert alert-warning text-end" role="alert">
+                            @ViewBag.count
+                        </div>
+                    }
 
                     <div class="card-body">
                         @foreach (var item in Model.ShoppingCartList)
@@ -91,8 +96,8 @@
                             <div class="col-12 col-md-6 offset-md-1 col-lg-4 offset-lg-3 pr-4 mt-4">
                                 <ul class="list-group">
                                     <li class="list-group-item d-flex justify-content-between bg-light">
-                                        <span class="text-info">Total(USD)</span>
-                                        <strong class="text-info">$ <span>@Model.OrderHeader.OrderTotal</span></strong>
+                                        <span class="text-info">Total(Shekel)</span>
+                                        <strong class="text-info">₪<span>@Model.OrderHeader.OrderTotal</span></strong>
                                     </li>
                                 </ul>
                             </div>

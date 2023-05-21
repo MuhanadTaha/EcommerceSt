@@ -24,7 +24,7 @@
 
     @foreach (var category in Model.Categories)
     {
-        var menuItems = Model.MenuItems.Where(m => m.Category.Name.Equals(category.Name)); // بدي أجيب كل المنيو أيتميز لكل كاتيجوري
+        var menuItems = Model.MenuItems.Where(m => m.Category.Name.Equals(category.Name) && (m.Count != 0)); // بدي أجيب كل المنيو أيتميز لكل كاتيجوري
 
         <div class="row">
             @if (menuItems.Count() > 0) //  في حال كان موجود منيو أيتيمز تابع لهذه الكاتيجوري

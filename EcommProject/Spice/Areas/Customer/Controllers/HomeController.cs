@@ -18,7 +18,6 @@ namespace Spice.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext db;
-
         public HomeController(ApplicationDbContext db)
         {
             this.db = db;
@@ -55,6 +54,7 @@ namespace Spice.Areas.Customer.Controllers
             {
                 MenuItem = menuItem,
                 MenuItemId = menuItem.Id
+
             };
 
 
@@ -68,6 +68,7 @@ namespace Spice.Areas.Customer.Controllers
 
         public async Task<IActionResult> Details (ShoppingCart shoppingCart)
         {
+           
             if (ModelState.IsValid)
             {
                 //shoppingCart.Id = 0; // بصفر الاي دي الخاص بالموديل اللي رح أستمله واللي هو شوبينج كارت عشان أحل مشكلة إنه دايما هذا الاي دي رح يوخذ الآي دي للمنيوا أيتم لأني ممرره في الجيت ميثود
@@ -79,15 +80,32 @@ namespace Spice.Areas.Customer.Controllers
 
                 var shoppingCartFromDb = await db.ShoppingCarts.Where(m => m.ApplicationUserId == shoppingCart.ApplicationUserId && m.MenuItemId == shoppingCart.MenuItemId).FirstOrDefaultAsync();
                 // بدي أشوف إذا الآيتم اللي ببعتها موجود نفسها بالداتا بيس وكما هل الشخص اللي عمل بوست هو نفسه ضايفها من قبل
-                if (shoppingCartFromDb == null)
+               
+                
+                var numberAvailable = await db.MenuItems.Where(m=>m.Id == shoppingCart.MenuItemId).Select(m => m.Count).FirstOrDefaultAsync();
+                //عشان أشوف كم عدد الكمية المتوفرة من هذا العنصر في المنيو ايتيمز
+
+                if(numberAvailable >= shoppingCart.Count)
                 {
-                    db.ShoppingCarts.Add(shoppingCart); // اذا مش موجودة الداتا معناها فش منتج فبضيفه بالتيبل أو الموديل
+                    if (shoppingCartFromDb == null)
+                    {
+                        db.ShoppingCarts.Add(shoppingCart); // اذا مش موجودة الداتا معناها فش منتج فبضيفه بالتيبل أو الموديل
+                    }
+                    else
+                    {
+                        shoppingCartFromDb.Count += shoppingCart.Count; // اذا موجود بس بزيد اقيمة الكاونت للمنتج حسب ايش أنا اخترت الكمية 
+                    }
+                    await db.SaveChangesAsync();
                 }
                 else
                 {
-                    shoppingCartFromDb.Count += shoppingCart.Count; // اذا موجود بس بزيد اقيمة الكاونت للمنتج حسب ايش أنا اخترت الكمية 
+                    ViewBag.count = "Error : Sorry Quantity is not available";
+                    return Ok(ViewBag.count);
+
                 }
-                await db.SaveChangesAsync();
+
+
+
 
 
                 var count = db.ShoppingCarts.Where(m => m.ApplicationUserId == shoppingCart.ApplicationUserId).ToList().Count; // بدي أجيب عدد محتويات الشوبينج كارت لليورز اللي عامل دخول

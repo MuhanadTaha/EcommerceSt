@@ -78,6 +78,17 @@
                     <span class="text-danger" asp-validation-for="MenuItem.SubCategoryId"></span> @*To Required Field*@
                 </div>
             </div>
+
+            <div class="from-group row mt-3">
+                <div class="col-4">
+                    <label asp-for="MenuItem.Count" class="col-form-label"></label>
+                </div>
+                <div class="col-8">
+                    <input type="number" required asp-for="MenuItem.Count" class="form-control" />
+
+                    <span class="text-danger" asp-validation-for="MenuItem.Count"></span> @*To Required Field*@
+                </div>
+            </div>
             
 
             <div class="from-group row" style="padding-top:20px;">

@@ -211,6 +211,20 @@ namespace Spice.Areas.Customer.Controllers
 
             //return RedirectToAction("Index","Home"); //بترجع على صفحة الإينديكس الموجودة بالكونترولار هوم
 
+            foreach (var item in OrderDetailsCartVM.ShoppingCartList) // بدي أجيب كل الايتمز اللي بالشوبينج ليست
+            {
+                // هان بدي أمر على كل الايتيمز اللي بالسلة واشوف كم الكمية اللي اله وانقصها من الداتا بيس
+                item.MenuItem = db.MenuItems.FirstOrDefault(m => m.Id == item.MenuItemId); // بدي أجيب تفاصيل الاي دي ايتم 
+                item.MenuItem.Count -=  item.Count; // بدي أحسب ألأوردار توتل
+
+
+                db.MenuItems.Update(item.MenuItem);
+                await db.SaveChangesAsync();
+
+
+            }
+
+
 
             return RedirectToAction("OrderHistory", "Orders");
         }
@@ -239,7 +253,18 @@ namespace Spice.Areas.Customer.Controllers
         {
             var shoppingCart = await db.ShoppingCarts.FindAsync(cartId); // بصل لواحد من اللشوبينج ايتيمز
             shoppingCart.Count += 1;
-            await db.SaveChangesAsync();
+
+            var numberAvailable = await db.MenuItems.Where(m => m.Id == shoppingCart.MenuItemId).Select(m => m.Count).FirstOrDefaultAsync();
+
+            if (numberAvailable >= shoppingCart.Count)
+            {
+                await db.SaveChangesAsync();
+            }
+            else
+            {
+                ViewBag.count = "Error : Sorry Quantity is not available";
+                return Ok(ViewBag.count);
+            }
 
             return RedirectToAction(nameof(Index));
 
