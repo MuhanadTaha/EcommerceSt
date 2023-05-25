@@ -32,7 +32,33 @@ namespace Spice.Areas.Customer.Controllers
                 HttpContext.Session.SetInt32(SD.ShoppingCartCount, shoppingCarts.Count()); 
 
             }
+            ViewBag.SomeValue = "";
+            HttpContext.Session.SetString("Filter", "Coca"); // وضعت عدد الايتيمز بالسيشين اللي اسمها شوبينج كارت كاونت
+            IndexViewModel IndexVM = new IndexViewModel()
+            {
 
+                Categories = await db.Cateogries.ToListAsync(),
+                MenuItems = await db.MenuItems.Include(m => m.Category).Include(m => m.SubCategory).ToListAsync()
+                
+            };
+            return View(IndexVM);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Index(string val)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (claim != null)
+            { // في حال ما كان عامل اليوزر لوج اين وفات دايريكت على الانديكس
+                List<ShoppingCart> shoppingCarts = await db.ShoppingCarts.Where(m => m.ApplicationUserId == claim.Value).ToListAsync();
+                HttpContext.Session.SetInt32(SD.ShoppingCartCount, shoppingCarts.Count());
+
+            }
+            ViewBag.SomeValue = "";
+            HttpContext.Session.SetString("Filter", "Coca"); // وضعت عدد الايتيمز بالسيشين اللي اسمها شوبينج كارت كاونت
             IndexViewModel IndexVM = new IndexViewModel()
             {
 
@@ -85,7 +111,7 @@ namespace Spice.Areas.Customer.Controllers
                 var numberAvailable = await db.MenuItems.Where(m=>m.Id == shoppingCart.MenuItemId).Select(m => m.Count).FirstOrDefaultAsync();
                 //عشان أشوف كم عدد الكمية المتوفرة من هذا العنصر في المنيو ايتيمز
 
-                if(numberAvailable >= shoppingCart.Count)
+                if(numberAvailable >= shoppingCart.Count) // بدي أشوف هل الكمية المتوفرة بالمحزن بتساوي أو أقل من الكمية اللي أنا طالبها
                 {
                     if (shoppingCartFromDb == null)
                     {
@@ -93,7 +119,18 @@ namespace Spice.Areas.Customer.Controllers
                     }
                     else
                     {
-                        shoppingCartFromDb.Count += shoppingCart.Count; // اذا موجود بس بزيد اقيمة الكاونت للمنتج حسب ايش أنا اخترت الكمية 
+                        if (numberAvailable >= shoppingCartFromDb.Count + shoppingCart.Count)// بدي أفحض إذا الكمية الموجودة بالسلة مع الكمية اللي أنا بدي أضيفها كمان مرة قد أو أقل من الكمية المتوفرة بالمخزن
+                        {
+                            shoppingCartFromDb.Count += shoppingCart.Count; // اذا موجود بس بزيد اقيمة الكاونت للمنتج حسب ايش أنا اخترت الكمية 
+
+                        }
+                        else
+                        {
+                            ViewBag.count = "Error : Sorry Quantity is not available";
+                            return Ok(ViewBag.count);
+
+
+                        }
                     }
                     await db.SaveChangesAsync();
                 }
